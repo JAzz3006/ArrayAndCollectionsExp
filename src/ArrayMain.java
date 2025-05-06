@@ -6,26 +6,32 @@ public class ArrayMain {
     public static final int NUMBERS_RANGE = 100;
 
     public static void main(String[] args) {
-        int arraySize = 0;
-        int [] initialArray = new int[3];
-        try{
-            arraySize = getArraySize();
-            initialArray = fillInitialArray(arraySize);
-        } catch (InputMismatchException | NegativeArraySizeException e) {
-            System.out.println("input missmatch !");
-            arraySize = getArraySize();
-            initialArray = fillInitialArray(arraySize);
-        }
+        int arraySize = getArraySize();;
+        int [] initialArray = fillInitialArray(arraySize);
 
         int [] reverseArray = getReverseArray(initialArray);
         System.out.println(Arrays.toString(initialArray));
         System.out.println(Arrays.toString(reverseArray));
-
     }
 
     public static int getArraySize() throws NegativeArraySizeException, InputMismatchException{
-        System.out.println("Введите размер массива - целое положительное число");
-        return new Scanner(System.in).nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int arraySize = 0;
+        while (true){
+            System.out.println("Введите размер массива - целое положительное число");
+            try {
+                arraySize = scanner.nextInt();
+                if (arraySize <= 0){
+                    System.out.println("Размер массива не может быть меньше нуля.");
+                    continue;
+                }
+                break;
+            }catch (InputMismatchException ime){
+                System.out.println("Ошибка ввода!");
+                scanner.nextLine();
+            }
+        }
+        return arraySize;
     }
 
     public static int[] fillInitialArray(int arraySize){
