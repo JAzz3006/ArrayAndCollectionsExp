@@ -16,7 +16,7 @@ public class HospitalMain {
     public static void getReport(float[] initTemps){
         System.out.println(tempsToString(initTemps));
         System.out.println("Из них здоровых: " + healthyPatientsCount(initTemps) + " чел.");
-        System.out.println("Средняя температура составляет " + getMeanTemp(initTemps));
+        System.out.println("Средняя температура составляет " + String.format("%.2f", getMeanTemp(initTemps)));
 
     }
     public static float[] getPatientsTemps(int patientsNumber){
