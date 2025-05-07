@@ -5,6 +5,9 @@ public class Task {
     private String name;
     private LocalDate deadline;
 
+    public Task() {
+    }
+
     public Task(String name, LocalDate deadline) {
         this.name = name;
         this.deadline = deadline;
@@ -28,7 +31,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Что сделать: " + name + '\'' +
+        return "Что сделать: " + name +
                 ", к дате: " + deadline;
     }
 }
