@@ -1,17 +1,21 @@
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class ArrayListMain {
     public static ArrayList<Task> toDoList = new ArrayList<>();
+    public static final String DATA_FILE_PATH = "data/todolist.ser";
     public static final String ADD_COMM = "add";
     public static final String LIST_COMM = "list";
     public static final String DELETE_COMM = "delete";
     public static final String HELP_COMM = "help";
     public static final String QUIT_COMM = "quit";
     public static final String EDIT_COMM = "edit";
+    public static final String SAVE_COMM = "save";
     public static final String GOODBYE_MSG = "до свидания!";
     public static final String EMPTY_MSG = "Нет запланированных дел";
     public static final String HELP = "Список команд:\n"
@@ -24,6 +28,7 @@ public class ArrayListMain {
 
 
     public static void main(String[] args) {
+        startWithDeserialization();
         while(true){
             System.out.println("Введите команду (" + HELP_COMM + " для списка команд)");
             String userInput = "";
@@ -48,6 +53,8 @@ public class ArrayListMain {
                 taskModifier();
             } else if (userInput.equals(HELP_COMM)) {
                 System.out.println(HELP);
+            } else if (userInput.equals(SAVE_COMM)) {
+                saveList(toDoList);
             } else {
                 System.out.println("Такой команды нет. help для списка команд");
             }
@@ -126,6 +133,26 @@ public class ArrayListMain {
                     break;
                 }
             }
+        }
+        public static void saveList(ArrayList<Task> toDoList){
+            try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE_PATH))){
+                oos.writeObject(toDoList);
+                System.out.println("Здесь должно было сохраниться");
+
+            }catch (IOException ioe){
+                System.out.println("we caught " + ioe.getMessage());
+            }
+
+        }
+        public static void startWithDeserialization(){
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE_PATH))){
+                toDoList = (ArrayList<Task>) ois.readObject();
+
+            }catch (IOException | ClassNotFoundException e){
+                e.printStackTrace();
+
+            }
+
         }
 
     }

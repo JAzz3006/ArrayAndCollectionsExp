@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Task {
+public class Task implements Serializable {
+    public static final long serialVersionUID = 1L;
+
     private String name;
     private LocalDate deadline;
 
